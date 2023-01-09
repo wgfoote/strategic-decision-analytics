@@ -18,3 +18,6 @@ This book is a course in probabilistic decision analytics with a focus on strate
 
 A decision is a compound of the organizational, and individuals within an organization, experiance, understanding, judgments, in a word knowledge, coupled with action, namely the decision.
 
+Gelman, A., Trevisani, M., Lu, H., and van Geen, A. (2004). Direct data manipulation for local decision analysis,
+as applied to the problem of arsenic in drinking water from tube wells in Bangladesh. Risk Analysis 24,
+1597–1612.
