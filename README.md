@@ -15,7 +15,7 @@ How can we pull all of this, and perhaps more, off? A workbench with insight inc
 - Game theoretic models will help us with rationality, signaling, cooperation and competition among multiple actors. Using a Bayesian-Nash approach we can solve these models for optimal decison trajectories. All games can be set in linear programming models. This will allow us to consider more extensive agent and decision spaces under states of uncertainty.
 - R and spreadsheet computing, documentation and visualization platforms will help us implement our ideas, analyses, analogies, dialectics and syntheses into artifacts consumable by decision makers. 
 
-This book is a course in probabilistic decision analytics with a focus on strategic decisions.
+This project is probabilistic decision analytics with a focus on strategic decisions.
 
 ## Strategic decisions
 
@@ -32,34 +32,8 @@ A decision is a compound of the organizational, and individuals within an organi
 
 By analytics we mean the process and product of developing the understanding we need to develop decision alternatives for an agent's discrete choice.
 
-- Data engineering and ontology reasoning to identify decision alternatives, their sources in the organizational ecosytem, metrics and the data to compute metrics and generate reports. 
+- Ontology reasoning to identify decision alternatives, their sources in the organizational ecosytem, metrics and the data to compute metrics and generate reports. 
 - Probabilistic reasoning provides the contingent logic we will need to make both-and and either-or assessments of our prior views of decision altenratives as will as deduce with data our posterior predictions of the outcomes of decision alternatives.
--  
+- Decision analytics combines backward looking for description and explanations and forward looking modalities to develop plausible scenarios and roadmaps for action and monitoring of decisions. 
 
-
-# Discretion is the better part
-
-## Robit
-
-Suppose we say that a regression is terrific for description. But we say further that description is simply not enough to make any kind of decision. Our transcendent realism will not abide it. Sure we have a way to predict outcomes. But we have a decision to make. Do not our views on outcomes matter? They certainly do!
-So far, we have considered regression modeling as a descriptive tool for studying how an outcome
-can be predicted given some input variables. A completely different approach is to model a decision
-outcome as a balancing of goals or utilities.
-Example: We demonstrate this idea using the example of well switching in Bangladesh (see Section 13.7).
-Arsenic in
-Bangladesh
-How can we understand the relation between distance, arsenic level, and the decision to switch?
-It makes sense that people with higher arsenic levels would be more likely to switch, but what
-coefficient values should we expect? Should the relation be on the log or linear scale? The actual
-health risk is believed to be linear in arsenic concentration; does that mean that a logarithmic model
-is inappropriate? Such questions can be addressed using a model for individual decisions.
-To set up a choice model, we must specify a value function, which represents the strength of
-preference for one decision over the other—in this case, the preference for switching as compared
-to not switching. The value function is scaled so that zero represents indifference, positive values
-correspond to a preference for switching, and negative values result in not switching. This model is
-thus similar to the latent-data interpretation of logistic regression (see page 226); and that model is a
-special case, as we shall see here.
-
-Gelman, A., Trevisani, M., Lu, H., and van Geen, A. (2004). Direct data manipulation for local decision analysis,
-as applied to the problem of arsenic in drinking water from tube wells in Bangladesh. Risk Analysis 24,
-1597–1612.
+## Discretion is the better part
