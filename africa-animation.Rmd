@@ -1,0 +1,180 @@
+---
+title: "Food Insecurity: Violent Development in Sub-Saharan Africa"
+author: Bill Foote
+date: "`r Sys.Date()`"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include = FALSE, eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
+
+set.seed(4289) #as always, the answer is 42, or is it 89
+library(lubridate)
+library(RColorBrewer)
+library(tidyverse)
+library(kableExtra)
+library(plotly)
+#
+pop <- read_csv( "population.csv")
+pop_long <- pop |>
+  gather( key=year, value=population, '1990':'2021')
+# ggplot helper
+# 
+plot_2_grid <- function( plot1, plot2, title_1= "Default" ){ 
+    # build side by side plots
+    plot_row <- plot_grid(plot1, plot2)
+    # now add the title
+    title <- ggdraw() + 
+    draw_label(
+      title_1,
+      fontface = 'bold',
+      x = 0,
+      hjust = 0
+    ) +
+    theme(
+      # add margin on the left of the drawing canvas,
+      # so title is aligned with left edge of first plot
+      plot.margin = margin(0, 0, 0, 7)
+    )
+    plot_grid(
+    title, plot_row,
+    ncol = 1,
+    # rel_heights values control vertical title margins
+    rel_heights = c(0.1, 1)
+    )
+  }
+plot_3_grid <- function( plot1, plot2, plot3, title_1= "Default" ){ 
+    # build side by side plots
+    plot_row <- plot_grid(plot1, plot2, plot3)
+    # now add the title
+    title <- ggdraw() + 
+    draw_label(
+      title_1,
+      fontface = 'bold',
+      x = 0,
+      hjust = 0
+    ) +
+    theme(
+      # add margin on the left of the drawing canvas,
+      # so title is aligned with left edge of first plot
+      plot.margin = margin(0, 0, 0, 7)
+    )
+    plot_grid(
+    title, plot_row,
+    ncol = 1,
+    # rel_heights values control vertical title margins
+    rel_heights = c(0.1, 1)
+    )
+}
+#
+# load data
+#vio <- read_csv( "gpd-violence-sub-sahara.csv")
+d_all <- read_csv( "casualties-life-gdppc-map-0.csv" )
+```
+
+Sourcing Food Insecurity: Violent Development
+===========================
+
+
+Column {.tabset}
+---------------------------
+
+### Tracking violence
+
+```{r}
+df <- d_all #|> 
+#  filter( year==2018)
+#df$q <- with(df, cut(casualties, quantile(casualties)))
+#levels(df$q) <- paste(c("1st", "2nd", "3rd", "4th", "5th"), "Quantile")
+#df$q <- as.ordered(df$q)
+
+g <- list(
+  scope = 'africa',
+  showland = TRUE,
+  #showframe = TRUE,
+  landcolor = toRGB("gray85"),
+  subunitcolor = toRGB("white"),
+  countrycolor = toRGB("white")
+)
+
+fig <- plot_geo(df, locationmode = 'country names', sizes = c(1, 600))
+fig <- fig |> add_markers(
+    x = ~lng, y = ~lat, size = ~casualties, color = ~casualties, frame = ~year, hoverinfo = "text",
+    text = ~paste(df$year, "<br />", df$country, "<br />", "GDP pc", df$gdppc, "<br />", "Life expected", df$life, "<br />",  "Casualties", df$casualties)
+  )
+fig <- fig |> layout(title = 'Development and Violence in Sub-Saharan Africa', geo = g)
+
+fig <- fig |>
+  animation_opts(
+    1000, easing = "elastic", redraw = TRUE
+  )
+fig
+```
+
+### Tracking development
+
+```{r}
+df <- d_all |> 
+  filter( country != "South Africa")
+fig <- df |>
+  plot_ly(
+    y = ~life, 
+    x = ~gdppc, 
+    size = ~casualties, 
+    color = ~country, 
+    frame = ~year, 
+    text = ~country, 
+    hoverinfo = "text",
+    type = 'scatter',
+    mode = 'markers'
+  )
+# only top ten each year showing
+fig <- fig |>
+  animation_opts(
+    1000, easing = "elastic", redraw = TRUE
+  )
+fig
+ 
+```
+
+### Notes
+
+```{css, echo=FALSE}
+p {
+  font-size: 18px;
+}
+li {
+  font-size: 18px;
+}
+```
+
+Many to-do's:
+
+1. Update gdppc data and merges to most recently available which as of today is only 2019.
+
+2. Find replacement for gdppc or at least proxy fdor >2019. Perhaps fdi as % of GDP, life satisfaction, mortality < 5 years of age, access to food, sanitation.
+
+3. inner_join( d_all, food_inflation, fdi )
+
+4. Investigate changing violent incident bubble size.
+
+5. Use xlim() to modify scatterplot. Check Equatorial Africa gdppc which looks way too big.
+
+6. Here is a good plotly online reference: <https://plotly-r.com/index.html>
+
+### Files
+
+Data, Rmarkdown, and HTML files are in this Google Drive directory: <https://drive.google.com/drive/folders/1-lQ8jjAp5tmDpKmCEHappn67RDyTxuOv?usp=share_link>
+
+- Animation file: `casualties-life-gdppc-map-0.csv`
+
+- ACLED violence: `1997-2022-violence-middle-south-east-africa.csv`
+
+- World inflation: `Inflation-data-world.xlsx`
+
+- Food inflation by country and year: `food_long.csv`
+
+- FDI as \% of GDP by country and year:
+`fdi_long.csv`
